@@ -18,7 +18,7 @@ public class Main {
     static String[][] room = {
             {wall, wall, wall, wall},
             {wall, "   ", "   ", wall},
-            {wall, "   ", "   ", wall},
+            {"   ", "   ", "   ", "   "},
             {wall, wall, wall, wall},
     };
 
@@ -32,7 +32,6 @@ public class Main {
         }
 
     }
-
 
     private static void _generateMap(){
         for(int y = 0; y < _map.length; y++){
@@ -55,6 +54,10 @@ public class Main {
             for(int x = 0; x < _map[y].length; x++){
                 if(x < room[0].length && y < room.length) {
                     _map[y + posY][x + posX] = room[y][x];
+
+                    if(y + posY == 0 || y + posY == _map.length - 1 || x + posX == 0 || x + posX == _map[y].length - 1){
+                        _map[y + posY][x + posX] = wall;
+                    }
                 }
             }
         }
