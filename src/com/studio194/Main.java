@@ -3,7 +3,7 @@ import java.lang.String;
 import java.util.Scanner;
 
 public class Main {
-    private static MapObjects objects;
+    //private static MapObjects objects;
 
     private final static Scanner _input = new Scanner(System.in);
     private final static String[][] _map = new String[10][20];
@@ -12,10 +12,10 @@ public class Main {
     private static int score = 0;
 
     static String[][] room = {
-            {objects.wall, objects.wall, objects.wall, objects.wall},
-            {objects.wall, "   ", "   ", objects.wall},
-            {"   ", objects.coin, "   ", "   "},
-            {objects.wall, objects.wall, objects.wall, objects.wall},
+            {MapObjects.wall, MapObjects.wall, MapObjects.wall, MapObjects.wall},
+            {MapObjects.wall, "   "          , "   "          , MapObjects.wall},
+            {"   "          , MapObjects.coin, "   "          , "   "},
+            {MapObjects.wall, MapObjects.wall, MapObjects.wall, MapObjects.wall},
     };
 
 
@@ -34,13 +34,13 @@ public class Main {
         for(int y = 0; y < _map.length; y++){
             for(int x = 0; x < _map[y].length; x++) {
                 if (y == 0 || y == _map.length - 1 || x == 0 || x == _map[y].length - 1){   //Makes default walls
-                    _map[y][x] = objects.wall;
+                    _map[y][x] = MapObjects.wall;
                 }else{  //Makes air spot
                     _map[y][x] = "   ";
                 }
 
                 if (x == playerX && y == playerY){    //Makes player if posion matches
-                    _map[playerY][playerX] = objects.player;
+                    _map[playerY][playerX] = MapObjects.player;
                 }
             }
         }
@@ -54,7 +54,7 @@ public class Main {
 
                     //Check if overlapping room walls(with the map border) have holes. if so fill them
                     if(y + posY == 0 || y + posY == _map.length - 1 || x + posX == 0 || x + posX == _map[y].length - 1){
-                        _map[y + posY][x + posX] = objects.wall;
+                        _map[y + posY][x + posX] = MapObjects.wall;
                     }
                 }
             }
@@ -94,16 +94,16 @@ public class Main {
 
         //Check If
         //There is a wall where the player is gonna move?
-        if(_map[playerY][playerX + xMove] != objects.wall)
+        if(!_map[playerY][playerX + xMove].equals(MapObjects.wall))
             playerX += xMove;
 
-        if(_map[playerY + yMove][playerX] != objects.wall)
+        if(!_map[playerY + yMove][playerX].equals(MapObjects.wall))
             playerY += yMove;
 
-        if(_map[playerY][playerX] == objects.coin){
+        if(_map[playerY][playerX].equals(MapObjects.coin)){
             score += 10;
             System.out.println(score);
         }
-        _map[playerY][playerX] = objects.player;
+        _map[playerY][playerX] = MapObjects.player;
     }
 }
