@@ -4,8 +4,6 @@ import java.lang.String;
 public class Main {
     private static String[][] _map = new String[10][20];
 
-    String [][] array = new String[10][10];
-
     static String[][] room = {
             {"#  ", "#  ", "#  ", "#  "},
             {"#  ", "   ", "   ", "#  "},
