@@ -3,7 +3,7 @@ import java.lang.String;
 import java.util.Scanner;
 
 public class Main {
-    //private static MapObjects objects;
+    public static boolean game_running = true;
 
     private final static Scanner _input = new Scanner(System.in);
     private final static String[][] _map = new String[10][20];
@@ -13,7 +13,7 @@ public class Main {
 
     static String[][] room = {
             {MapObjects.wall, MapObjects.wall, MapObjects.wall, MapObjects.wall},
-            {MapObjects.wall, "   "          , "   "          , MapObjects.wall},
+            {MapObjects.wall, MapObjects.finish          , "   "          , MapObjects.wall},
             {"   "          , MapObjects.coin, "   "          , "   "},
             {MapObjects.wall, MapObjects.wall, MapObjects.wall, MapObjects.wall},
     };
@@ -23,11 +23,11 @@ public class Main {
         _generateMap();
         addRoomToMap(room, 0, 0);
 
-        while(true){
+        while(game_running){
             _render();
             _update();
         }
-
+        _finalScore();
     }
 
     private static void _generateMap(){
@@ -39,7 +39,7 @@ public class Main {
                     _map[y][x] = "   ";
                 }
 
-                if (x == playerX && y == playerY){    //Makes player if posion matches
+                if (x == playerX && y == playerY){    //Makes player if position matches
                     _map[playerY][playerX] = MapObjects.player;
                 }
             }
@@ -102,8 +102,17 @@ public class Main {
 
         if(_map[playerY][playerX].equals(MapObjects.coin)){
             score += 10;
-            System.out.println(score);
+        }else if(_map[playerY][playerX].equals(MapObjects.finish)){
+            game_running = false;
         }
         _map[playerY][playerX] = MapObjects.player;
+    }
+
+    private static void _finalScore(){
+        System.out.println("!!!Congratulations, you finished the game!!!");
+        System.out.println("Score: " + score);
+        System.out.println();
+        System.out.print("Enter any symbol to exit: ");
+        String string = _input.nextLine();
     }
 }
