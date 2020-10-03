@@ -109,7 +109,7 @@ public class Main {
     }
 
     private static void _finalScore(){
-        System.out.println("!!!Congratulations, you finished the game!!!");
+        System.out.println("!!!You've finished the game!!!");
         System.out.println("Score: " + score);
         System.out.println();
         System.out.print("Enter any symbol to exit: ");
