@@ -1,6 +1,7 @@
 package com.studio194;
 import java.lang.String;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 public class Main {
     public static boolean game_running = true;
@@ -10,16 +11,21 @@ public class Main {
 
     private static int playerX = 6, playerY = 6;
     private static int score = 0;
+    private static boolean hasKey = false;
 
     static String[][] room = {
             {MapObjects.wall, MapObjects.wall, MapObjects.wall, MapObjects.wall},
-            {MapObjects.wall, MapObjects.finish          , "   "          , MapObjects.wall},
-            {"   "          , MapObjects.coin, "   "          , "   "},
+            {MapObjects.wall, MapObjects.door, "   "          , MapObjects.wall},
+            {"   "          , MapObjects.money, "   "          , "   "},
             {MapObjects.wall, MapObjects.wall, MapObjects.wall, MapObjects.wall},
     };
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
+        _intro();
+
+        TimeUnit.SECONDS.sleep(5);
+
         _generateMap();
         addRoomToMap(room, 0, 0);
 
@@ -94,20 +100,30 @@ public class Main {
 
         //Check If
         //There is a wall where the player is gonna move?
-        if(!_map[playerY][playerX + xMove].equals(MapObjects.wall))
+        if(!_map[playerY + yMove][playerX + xMove].equals(MapObjects.wall) &&
+                !(_map[playerY + yMove][playerX + xMove].equals(MapObjects.door) && hasKey == false)) {
             playerX += xMove;
-
-        if(!_map[playerY + yMove][playerX].equals(MapObjects.wall))
             playerY += yMove;
+        }
 
-        if(_map[playerY][playerX].equals(MapObjects.coin)){
+        if(_map[playerY][playerX].equals(MapObjects.money)){
             score += 10;
-        }else if(_map[playerY][playerX].equals(MapObjects.finish)){
+        }else if(_map[playerY][playerX].equals(MapObjects.key)){
+            hasKey = true;
+        }else if(_map[playerY][playerX].equals(MapObjects.door)){
             game_running = false;
         }
         _map[playerY][playerX] = MapObjects.player;
     }
 
+
+    private static void _intro(){
+        System.out.println("Wall: " + MapObjects.wall);
+        System.out.println("Player: " + MapObjects.player);
+        System.out.println("Money/Score: " + MapObjects.money);
+        System.out.println("Key: " + MapObjects.key);
+        System.out.println("Finish/Door(needs key): " + MapObjects.door);
+    }
     private static void _finalScore(){
         System.out.println("!!!You've finished the game!!!");
         System.out.println("Score: " + score);
