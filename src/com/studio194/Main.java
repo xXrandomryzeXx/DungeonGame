@@ -7,19 +7,11 @@ public class Main {
     public static boolean game_running = true;
 
     private final static Scanner _input = new Scanner(System.in);
-    private final static String[][] _map = new String[10][20];
+    private final static String[][] _map = new String[7][7];
 
-    private static int playerX = 6, playerY = 6;
+    private static int playerX = 1, playerY = 1;
     private static int score = 0;
     private static boolean hasKey = false;
-
-    static String[][] room = {
-            {MapObjects.wall, MapObjects.wall, MapObjects.wall, MapObjects.wall},
-            {MapObjects.wall, MapObjects.door, "   "          , MapObjects.wall},
-            {"   "          , MapObjects.money, "   "          , "   "},
-            {MapObjects.wall, MapObjects.wall, MapObjects.wall, MapObjects.wall},
-    };
-
 
     public static void main(String[] args) throws InterruptedException {
         _intro();
@@ -27,7 +19,11 @@ public class Main {
         TimeUnit.SECONDS.sleep(5);
 
         _generateMap();
-        addRoomToMap(room, 0, 0);
+        addRoomToMap(Rooms.room1, 0, 0);
+        addRoomToMap(Rooms.room2, 3, 0);
+        addRoomToMap(Rooms.room3, 0, 3);
+        addRoomToMap(Rooms.room4, 3, 3);
+        _generatePlayer();
 
         while(game_running){
             _render();
@@ -45,11 +41,13 @@ public class Main {
                     _map[y][x] = "   ";
                 }
 
-                if (x == playerX && y == playerY){    //Makes player if position matches
-                    _map[playerY][playerX] = MapObjects.player;
-                }
+
             }
         }
+    }
+
+    private static void _generatePlayer(){
+        _map[playerY][playerX] = MapObjects.player;
     }
 
     private static void addRoomToMap(String[][] room, int posX, int posY){
