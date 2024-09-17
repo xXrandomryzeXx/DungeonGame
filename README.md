@@ -1,4 +1,4 @@
-"# DungeonGame" 
+## DungeonGame
 A Console Dungeon Game made as a project for school.
 
 Player is controlled by typing in the commands "left" "right" "up" "down"
